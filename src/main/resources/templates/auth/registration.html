@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New user</title>
+</head>
+<body>
+
+<h2> Регистрация нового пользователя </h2>
+
+<form th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
+    <leble for="Username">Как звать? </leble>
+    <input type="text" th:field="*{username}" id="username">
+    <br><br>
+    <leble for="Surname">Фамилия</leble>
+    <input type="text" th:field="*{surname}" id="surname">
+    <br><br>
+    <leble for="Age">Возраст</leble>
+    <input type="text" th:field="*{age}" id="age">
+    <br><br>
+    <leble for="Password">Пароль</leble>
+    <input type="text" th:field="*{password}" id="password">
+    <input type="submit" value="Ok">
+</form>
+
+<br><br>
+<a href="/">Нет, спасибо</a>
+
+
+
+</body>
+</html>
