@@ -30,6 +30,10 @@ public class UserServiceImpl implements  UserService{
         this.passwordEncoder = passwordEncoder;
     }
     public void saveUser(User user) {
+
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return;
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -56,7 +60,7 @@ public class UserServiceImpl implements  UserService{
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
-        if (userRepository.findByUsername(username).isPresent()) {
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException(String.format("Похоже, '%s' не найден.", username));
         }
         return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
