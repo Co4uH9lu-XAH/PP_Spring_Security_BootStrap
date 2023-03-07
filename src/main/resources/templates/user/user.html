@@ -5,6 +5,26 @@
 </head>
 <body>
 <h1>Тут живет юзер</h1>
+
+<table>
+    <tr>
+        <th>Наименование</th>
+        <th>Значение</th>
+    </tr>
+    <tr>
+        <td>Username:</td>
+        <td><p th:text="${user.getUsername()}">VALUE</p></td>
+    </tr>
+    <tr>
+        <td>Surname:</td>
+        <td><p th:text="${user.getSurname()}">VALUE</p></td>
+    </tr>
+    <tr>
+        <td>Age:</td>
+        <td><p th:text="${user.getAge()}">VALUE</p></td>
+    </tr>
+    <tr>
+</table>
 <br><br>
 <a href="/logout">Разлогиниться</a>
 <br><br>

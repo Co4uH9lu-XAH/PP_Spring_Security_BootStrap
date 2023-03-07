@@ -12,7 +12,9 @@ public interface UserService extends UserDetailsService {
     User getUserById(int id);
     List<User> getAll();
     void delete(int id);
-    void update(int id);
+    void update(User user, int id);
+
+    User findByUserName(String name);
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
