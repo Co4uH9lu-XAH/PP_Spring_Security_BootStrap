@@ -72,17 +72,4 @@ public class UserServiceImpl implements  UserService{
         return userRepository.findByUsername(name).get();
     }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("Похоже, '%s' не найден.", username));
-        }
-        return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
-                user.get().getPassword(), mapRolesToAuthority(user.get().getRole()));
-    }
-    private Collection<? extends GrantedAuthority> mapRolesToAuthority (Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
-    }
 }
