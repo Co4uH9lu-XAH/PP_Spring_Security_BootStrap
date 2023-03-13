@@ -31,6 +31,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @ManyToMany(cascade = {CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     @JoinTable (name = "user_role", joinColumns = @JoinColumn( name = "user_id"),
@@ -40,10 +43,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String surname, int age) {
+    public User(String username, String surname, int age, String email) {
         this.username = username;
         this.surname = surname;
         this.age = age;
+        this.email = email;
     }
 
     public int getId() {
@@ -77,6 +81,14 @@ public class User implements UserDetails {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Role> getRole() {

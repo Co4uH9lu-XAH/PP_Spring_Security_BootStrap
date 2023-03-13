@@ -4,12 +4,12 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>Тут живет юзер</h1>
+<h1>User page</h1>
 
 <table>
     <tr>
-        <th>Наименование</th>
-        <th>Значение</th>
+        <th>Name</th>
+        <th>Value</th>
     </tr>
     <tr>
         <td>Username:</td>
@@ -24,9 +24,23 @@
         <td><p th:text="${user.getAge()}">VALUE</p></td>
     </tr>
     <tr>
+        <td>Email:</td>
+        <td><p th:text="${user.getEmail()}">VALUE</p></td>
+    </tr>
+    <tr>
+        <td>Role:</td>
+        <td>
+            <div th:each="role:${role}">
+            <a th:text="${role.getRole}">VALUE</a>
+            </div>
+            </td>
+    </tr>
+    <tr>
 </table>
+
+
 <br><br>
-<a href="/logout">Разлогиниться</a>
+<a href="/logout">Logout</a>
 <br><br>
 <a href="/">Back</a>
 </body>
