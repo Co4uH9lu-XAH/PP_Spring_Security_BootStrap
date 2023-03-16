@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -44,5 +46,14 @@ public class AdminController {
     public String updateUser(@ModelAttribute User user, @PathVariable("id") int id) {
         userService.update(user, id);
         return "redirect:/admin/showUsers";
+    }
+
+    // Новый контроллер для админа
+    @GetMapping("/admin")
+    public String showUser(Model model, Principal principal) {
+        User user = userService.findByUserName(principal.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("role", user.getRoles());
+        return "/admin/admin";
     }
 }

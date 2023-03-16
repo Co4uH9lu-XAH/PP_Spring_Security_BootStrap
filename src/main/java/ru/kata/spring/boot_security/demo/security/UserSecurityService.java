@@ -34,7 +34,7 @@ public class UserSecurityService implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("Похоже, '%s' не найден.", username));
         }
         return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
-                user.get().getPassword(), mapRolesToAuthority(user.get().getRole()));
+                user.get().getPassword(), mapRolesToAuthority(user.get().getRoles()));
     }
     private Collection<? extends GrantedAuthority> mapRolesToAuthority (Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());

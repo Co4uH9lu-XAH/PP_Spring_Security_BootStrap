@@ -12,30 +12,34 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.HashSet;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
-    private final RoleRepository roleRepository;
 
     @Autowired
     public AuthController(UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
     }
 
     @GetMapping("/registration")
-    public String registrationPage(Model model, User user) {
-        model.addAttribute("role", user.getRole());
-        model.addAttribute("user", user);
+    public String registrationPage(Model model) {
+        model.addAttribute("role");
+        model.addAttribute("user", new User());
         return "/auth/registration";
     }
 
     @PostMapping("/registration")
     public String registration (@ModelAttribute("user") User user, @ModelAttribute("role") Role role) {
         userService.saveUser(user);
-        user.getRole().add(roleRepository.findByRole(role.getRole()));
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "/auth/login";
     }
 }
