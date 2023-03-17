@@ -5,25 +5,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/showUsers")
-    public String getAllUsers(Model model) {
-        model.addAttribute("users", userService.getAll());
-        return "admin/show-users";
+        this.roleService = roleService;
     }
 
     @GetMapping("show-user/{id}")
@@ -31,29 +29,33 @@ public class AdminController {
         model.addAttribute("user", userService.getUserById(id));
         return "admin/show-user";
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public String deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
-        return "redirect:/admin/showUsers";
+        return "redirect:/admin/admin";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editUser(@PathVariable ("id") int id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "/admin/edit-user";
-    }
-    @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute User user, @PathVariable("id") int id) {
+    @PatchMapping("/{id}/update")
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+        getUserRoles(user);
         userService.update(user, id);
-        return "redirect:/admin/showUsers";
+        return "redirect:/admin/admin";
     }
 
-    // Новый контроллер для админа
+
     @GetMapping("/admin")
-    public String showUser(Model model, Principal principal) {
-        User user = userService.findByUserName(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("role", user.getRoles());
+    public String getAdminPage(Model model, Principal principal) {
+        User authenticatedUser = userService.findByUserName(principal.getName());
+        model.addAttribute("authenticatedUser", authenticatedUser);
+        model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
+        model.addAttribute("users", userService.getAll());
+        model.addAttribute("roles", roleService.getAll());
         return "/admin/admin";
+    }
+
+    private void getUserRoles(User user) {
+        user.setRole(user.getRoles().stream()
+                .map(role -> roleService.getRoleByName(role.getRole()))
+                .collect(Collectors.toSet()));
     }
 }
