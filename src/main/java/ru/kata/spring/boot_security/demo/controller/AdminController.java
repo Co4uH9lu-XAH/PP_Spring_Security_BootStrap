@@ -37,7 +37,6 @@ public class AdminController {
 
     @PatchMapping("/{id}/update")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        getUserRoles(user);
         userService.update(user, id);
         return "redirect:/admin/admin";
     }
@@ -47,15 +46,9 @@ public class AdminController {
     public String getAdminPage(Model model, Principal principal) {
         User authenticatedUser = userService.findByUserName(principal.getName());
         model.addAttribute("authenticatedUser", authenticatedUser);
-        model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
+        //model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
         model.addAttribute("users", userService.getAll());
-        model.addAttribute("roles", roleService.getAll());
+        model.addAttribute("listRoles", roleService.getAll());
         return "/admin/admin";
-    }
-
-    private void getUserRoles(User user) {
-        user.setRole(user.getRoles().stream()
-                .map(role -> roleService.getRoleByName(role.getRole()))
-                .collect(Collectors.toSet()));
     }
 }

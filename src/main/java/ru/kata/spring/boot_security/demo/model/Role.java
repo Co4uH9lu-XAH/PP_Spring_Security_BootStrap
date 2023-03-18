@@ -14,37 +14,37 @@ public class Role implements GrantedAuthority {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "role")
-    private String role;
+    @Column(name = "name")
+    private String name;
 
 
     public Role() {
     }
 
     public Role(String role) {
-        this.role = role;
+        this.name = role;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String name) {
+        this.name = name;
     }
 
     @Override
     public String getAuthority() {
-        return getRole();
+        return getName();
     }
 
     @Override
     public String toString() {
-        return role;
+        return name;
     }
 
     @Override
@@ -52,11 +52,11 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role1 = (Role) o;
-        return id == role1.id && Objects.equals(role, role1.role);
+        return id == role1.id && Objects.equals(name, role1.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, role);
+        return Objects.hash(id, name);
     }
 }
