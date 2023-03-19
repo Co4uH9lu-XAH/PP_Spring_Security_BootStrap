@@ -10,24 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.util.HashSet;
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AuthController(UserService userService, RoleRepository roleRepository) {
+    public AuthController(UserService userService, RoleRepository roleRepository, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/registration")
     public String registrationPage(Model model) {
-        model.addAttribute("role");
+        model.addAttribute("listRole", roleService.getAll());
         model.addAttribute("user", new User());
         return "/auth/registration";
     }

@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements  UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
@@ -30,6 +30,7 @@ public class UserServiceImpl implements  UserService{
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
     }
+
     public void saveUser(User user) {
 
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
@@ -40,8 +41,9 @@ public class UserServiceImpl implements  UserService{
         userRepository.save(user);
 
     }
+
     public User getUserById(int id) {
-       return userRepository.getById(id);
+        return userRepository.getById(id);
     }
 
     @Override
@@ -52,19 +54,15 @@ public class UserServiceImpl implements  UserService{
     @Override
     @Transactional
     public void delete(int id) {
-        userRepository.deleteById(id);;
+        userRepository.deleteById(id);
+        ;
     }
 
     @Override
     @Transactional
     public void update(User user, int id) {
-        if (userRepository.findById(id).get().getPassword().equals(user.getPassword())) {
-            userRepository.save(user);
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-        }
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
