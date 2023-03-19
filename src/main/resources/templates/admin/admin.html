@@ -43,7 +43,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <!------------------------------------------------- Left Sidebar ------------------------------------------------->
+            <!------------------------------------------------- Left Buttons ------------------------------------------------->
 
             <div class="col-1 p-0 mt-2">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -62,13 +62,13 @@
                 </ul>
             </div>
 
-
+            <!-------------------------------------------------------Right side columns--------------------------------->
             <main role="main" class="col-lg-11 pt-3 px-4 bg-light hmax min-vh-100">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 ">
                     <h1>Admin panel</h1>
                 </div>
 
-                <!------------------------------------------------- Tabs ------------------------------------------------->
+                <!------------------------------------------------- Buttons ------------------------------------------------->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#allUsers"
@@ -82,13 +82,13 @@
                     </li>
                 </ul>
 
-                <!------------------------------------------------- Tabs content ------------------------------------------------->
+                <!------------------------------------------------- Buttons content ----------------------------------->
                 <div class="tab-content" id="myTabContent">
-                    <!------------------------------------------------- Tab Users table ------------------------------------------------->
+                    <!------------------------------------------------- Button Users table ---------------------------->
                     <div class="tab-pane fade show active" id="allUsers" role="tabpanel"
                          aria-labelledby="all-users-tab">
 
-                        <!------------------------------------------------- All users ------------------------------------------------->
+                        <!------------------------------------- Table in card with all users -------------------------->
                         <div class="card">
                             <div class="card-header">
                                 <h4>
@@ -117,12 +117,14 @@
                                         <td><span th:each="role : ${user.getRoles()}">
                                             <span th:text="${role.getAuthority().replace('ROLE_', '')}"> Role</span> </span>
                                         </td>
+
+                                            <!--------------------------------Ref t0 edit modal------------------------>
                                         <td><span><a class="btn btn-info"
                                                      role="button" data-bs-toggle="modal"
                                                      th:data-bs-target="${'#editModal' + user.id}"> Edit</a>
                                             </span>
 
-                                            <!------------------------------------------------- Edit Modal ------------------------------------------------->
+                                            <!------------------------------------------------- Edit Modal ------------>
                                             <div class="modal fade" tabindex="-1"
                                                  th:id="${'editModal' + user.id}"
                                                  th:object="${user}"
@@ -204,13 +206,15 @@
                                             </div>
                                         </td>
                                         <td>
+
+                                            <!--------------------------------------------Ref to delete modal---------->
                                             <span>
                                                 <a class="btn btn-danger"
                                                    role="button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                    th:data-bs-target="${'#deleteModal' + user.id}"> Delete </a>
                                             </span>
 
-                                            <!------------------------------------------------- Delete Modal ------------------------------------------------->
+                                            <!------------------------------------------ Delete Modal ----------------->
                                             <div class="modal fade" tabindex="-1" th:id="${'deleteModal' + user.id}"
                                                  aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
@@ -298,7 +302,7 @@
                         </div>
                     </div>
 
-                    <!------------------------------------------------- Tab New User ------------------------------------------------->
+                    <!------------------------------------------------- Button New User ------------------------------->
                     <div class="tab-pane fade" id="newUser" role="tabpanel" aria-labelledby="new-user-tab">
                         <div class="card">
                             <div class="card-header">

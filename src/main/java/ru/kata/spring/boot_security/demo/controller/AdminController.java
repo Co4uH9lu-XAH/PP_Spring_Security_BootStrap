@@ -24,11 +24,6 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("show-user/{id}")
-    public String getUser(@PathVariable("id") int id, Model model ) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "admin/show-user";
-    }
     @DeleteMapping("/{id}/delete")
     public String deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
