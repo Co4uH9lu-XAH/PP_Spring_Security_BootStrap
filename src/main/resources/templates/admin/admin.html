@@ -103,6 +103,7 @@
                                         <th> First name</th>
                                         <th> Last Name</th>
                                         <th> Email</th>
+                                        <th> Age </th>
                                         <th> Role</th>
                                         <th> Edit</th>
                                         <th> Delete</th>
@@ -110,11 +111,12 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="user : ${listUsers}">
-                                        <td><span th:text=" ${user.getId()}"> ID </span></td>
-                                        <td><span th:text=" ${user.getUsername()}"> Name </span></td>
-                                        <td><span th:text=" ${user.getSurname()}"> Last Name </span></td>
-                                        <td><span th:text=" ${user.getEmail()}"> Email </span></td>
-                                        <td><span th:each="role : ${user.getRoles()}">
+                                        <td><span th:text=" ${user.id}"> ID </span></td>
+                                        <td><span th:text=" ${user.username}"> Name </span></td>
+                                        <td><span th:text=" ${user.surname}"> Last Name </span></td>
+                                        <td><span th:text=" ${user.email}"> Email </span></td>
+                                        <td><span th:text=" ${user.age}"> Age </span></td>
+                                        <td><span th:each="role : ${user.roles}">
                                             <span th:text="${role.getAuthority().replace('ROLE_', '')}"> Role</span> </span>
                                         </td>
 
@@ -174,6 +176,16 @@
                                                                            th:value="${editedUser.email}"
                                                                            class="form-control"
                                                                            id="editModalUsername" required/>
+                                                                </div>
+
+                                                                <div class="form-group mb-2">
+                                                                    <label for="editModalUsername"
+                                                                           class="form-label fw-bold">Age</label>
+                                                                    <input type="number"
+                                                                           name="age"
+                                                                           th:value="${editedUser.age}"
+                                                                           class="form-control"
+                                                                           id="editModalAge" required/>
                                                                 </div>
 
                                                                 <div class="form-group mb-2">
@@ -271,6 +283,15 @@
                                                                            id="deleteModalUsername" readonly/>
                                                                 </div>
 
+                                                                <div class="form-group mb-2">
+                                                                    <label for="deleteModalAge"
+                                                                           class="form-label fw-bold"> Age </label>
+                                                                    <input type="text"
+                                                                           th:value="${user.age}"
+                                                                           class="form-control"
+                                                                           id="deleteModalAge" readonly/>
+                                                                </div>
+
                                                                 <label class="form-label fw-bold">Role</label>
                                                                 <select class="w-100" name="roles" multiple
                                                                         disabled size="2">
@@ -335,6 +356,14 @@
                                             <input type="text" name="email" th:field="${newUser.email}"
                                                    class="form-control"
                                                    id="email"
+                                                   placeholder="email"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="age" class="form-label fw-bold">Age</label>
+                                            <input type="number" name="age" th:field="${newUser.age}"
+                                                   class="form-control"
+                                                   id="age"
                                                    placeholder="email"/>
                                         </div>
 
