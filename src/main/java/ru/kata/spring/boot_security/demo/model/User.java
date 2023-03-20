@@ -43,11 +43,13 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String surname, int age, String email) {
+    public User(String username, String surname, int age, String password, String email, Set<Role> roles) {
         this.username = username;
         this.surname = surname;
         this.age = age;
+        this.password = password;
         this.email = email;
+        this.roles = roles;
     }
 
     public int getId() {
@@ -93,6 +95,10 @@ public class User implements UserDetails {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void setRole(Set<Role> roles) {

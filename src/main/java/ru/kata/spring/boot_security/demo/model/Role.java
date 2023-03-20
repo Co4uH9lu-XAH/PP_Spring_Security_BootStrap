@@ -33,7 +33,7 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    public void setRole(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -50,13 +50,14 @@ public class Role implements GrantedAuthority {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role1 = (Role) o;
-        return id == role1.id && Objects.equals(name, role1.name);
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
+        return id == role.id && name.equals(role.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
 }
